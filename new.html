@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>新增</title>
+    <style>
+        h1 
+        {
+            font-size: 200% ;
+
+            text-align: center;
+
+            color: goldenrod;          
+        }
+        main 
+        {
+            width: 400px;
+
+            height: 400px;
+
+            margin: 20px auto ;
+
+            background-color: lightskyblue;
+
+            font-size: 150%;
+
+            padding: 20px;
+
+            box-sizing: border-box;
+
+            position: relative;
+        }
+        input 
+        {
+            line-height: 150%;
+
+            border-radius: 3px;
+
+            width: 160px;
+
+            position: absolute;
+
+            right: 40px;
+        }
+        label 
+        {
+            position: absolute;
+
+            right: 240px;
+        }
+        button 
+        {
+            width: 60px;
+
+            height: 30px;
+
+            border-radius: 5px;
+
+            background-color: greenyellow;
+
+            position: relative;
+
+            left :150px;
+        }
+    </style>
+</head>
+<body>
+        
+    <h1>新增员工录入页面</h1>
+    <main>
+        <label for="">员工姓名:</label>
+        <input type="text" placeholder="请输入姓名" name="user">
+        <br> <br>
+        <label for="">员工编号:</label>
+        <input type="text" placeholder="请输入编号" name="num">
+        <br><br>
+        <label for="">员工职位:</label>
+        <input type="text" placeholder="请输入职位" name="job">
+        <br><br>
+        <label for="">员工银行卡号:</label>
+        <input type="text" placeholder="请输入卡号" name='card'>
+        <br><br>
+        <label for="">员工联系方式:</label>
+        <input type="text" placeholder="请输入手机号" name="phone">
+        <br><br>
+        <button onclick="addNew()">提交</button>
+    </main>    
+    
+    <script>
+        var user = document.getElementsByName('user')[0];
+        
+        var num = document.getElementsByName('num')[0];
+
+        var job = document.getElementsByName('job')[0];
+
+        var card = document.getElementsByName('card')[0];
+
+        var phone = document.getElementsByName('phone')[0];
+
+        function addNew()
+        {
+            
+            var time = new Date();
+            var currentTime = time.getFullYear() +'年' + (time.getMonth() + 1) +'月'
+                              + time.getDate() + '日  ' + time.getHours() + ':' +
+                              time.getMinutes() + ':' + time.getSeconds()
+            // var obj = {
+            //     user : user.value ,
+
+            //     num : num.value ,
+
+            //     job : job.value ,
+
+            //     card : card.value ,
+
+            //     phone : phone.value,
+
+            //     time : currentTime
+
+            // }
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function()
+            {
+                if(xhr.readyState == 4)
+                {
+                    console.log('接收到服务器返回的值:' + xhr.responseText)
+                }
+            }
+
+            var form = new FormData();
+
+            // append 后面跟两个值
+            // 值1：参数的名称
+            // 值2：参数具体的值
+            // form.append('data',obj)
+            form.append('user',user.value)
+            form.append('num',num.value)
+            form.append('card',card.value)
+            form.append('phone',phone.value)
+            form.append('time',currentTime)
+            form.append('job',job.value)
+
+            xhr.open('post','/add')
+
+            xhr.send(form);
+
+        }
+    </script>
+</body>
+</html>
